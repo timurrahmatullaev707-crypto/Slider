@@ -1,0 +1,251 @@
+<!doctype html>
+<html lang="uz">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ultra 4K 3D Cinema Slider | WOW Edition</title>
+    <link rel="stylesheet" href="./style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <!-- Dynamic Ambient Glow Backdrop (Mirrors current slide) -->
+    <div class="ambient-backdrop" id="ambient-backdrop"></div>
+    <div class="bg-stars"></div>
+
+    <!-- Header & Interactive Toolbar -->
+    <header class="top-bar">
+      <div class="brand">
+        <div class="brand-badge">4K ULTRA</div>
+        <div class="brand-text">
+          <span class="brand-title">CINEMA 3D</span>
+          <span class="brand-sub">STUDIO EDITION</span>
+        </div>
+      </div>
+
+      <!-- Quick 4K Presets Pills -->
+      <div class="preset-pills">
+        <button class="pill-btn active" data-preset="all">🔥 Barchasi</button>
+        <button class="pill-btn" data-preset="nature">🏔️ Tabiat</button>
+        <button class="pill-btn" data-preset="cyber">⚡ Cyberpunk</button>
+        <button class="pill-btn" data-preset="space">🌌 Kosmos</button>
+        <button class="pill-btn" data-preset="cars">🏎️ Supercars</button>
+      </div>
+
+      <div class="actions-panel">
+        <!-- URL Input from Chrome -->
+        <form id="url-form" class="url-input-group">
+          <svg class="input-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/>
+            <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>
+          </svg>
+          <input 
+            type="text" 
+            id="url-input" 
+            placeholder="Chrome rasm linkini tashlang..." 
+            autocomplete="off" 
+          />
+          <button type="submit" class="btn btn-primary" id="add-url-btn">
+            <span>+ Qo'shish</span>
+          </button>
+        </form>
+
+        <!-- Device Upload -->
+        <label for="image-upload" class="btn btn-secondary upload-label" title="Kompyuterdan rasm yuklash">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+            <polyline points="17 8 12 3 7 8"/>
+            <line x1="12" y1="3" x2="12" y2="15"/>
+          </svg>
+          <span>Fayl yuklash</span>
+        </label>
+        <input type="file" id="image-upload" accept="image/*" multiple />
+
+        <!-- Sound Effects Toggle -->
+        <button type="button" class="btn btn-icon-round" id="sound-btn" title="Futuristik tovush effektlari (Yoqish/O'chirish)">
+          <svg id="sound-on-icon" xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
+          <svg id="sound-off-icon" class="hidden" xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/></svg>
+        </button>
+
+        <!-- Fullscreen Button -->
+        <button type="button" class="btn btn-icon-round" id="fullscreen-btn" title="Katta ekran (Fullscreen)">
+          <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/></svg>
+        </button>
+
+        <!-- Clear Button -->
+        <button type="button" class="btn btn-danger" id="clear-btn" title="Barcha slaydlarni tozalash">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="3 6 5 6 21 6"/>
+            <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
+          </svg>
+        </button>
+      </div>
+    </header>
+
+    <!-- Chrome Quick Tip -->
+    <div class="quick-tip">
+      <span class="tip-badge">SUPER QULAYLIK</span>
+      <span>Chrome'da rasmni nusxalaganda (Copy image) bu yerda shunchaki <b>Ctrl + V</b> bosing!</span>
+      <span class="tip-sep">•</span>
+      <span>Klaviaturada <b>←</b> va <b>→</b> orqali boshqarish</span>
+    </div>
+
+    <!-- Main 3D Cinema Slider Stage -->
+    <main class="slider-stage">
+      <!-- 3D Card with Mouse Parallax & Glare -->
+      <div class="slider-viewport" id="slider-viewport">
+        <!-- Interactive 3D Glare Lighting -->
+        <div class="glare-effect" id="glare-effect"></div>
+
+        <!-- Floating Glass Counter -->
+        <div class="slider-counter-badge">
+          <span class="counter-pulse"></span>
+          <span id="slide-counter">01 / 05</span>
+        </div>
+
+        <!-- 4K Quality Watermark Badge -->
+        <div class="quality-badge">
+          <span>HDR 4K ULTRA</span>
+        </div>
+
+        <!-- Slides 3D Track -->
+        <div class="slides" id="slides-container">
+          <!-- Slide 1 -->
+          <div class="slide active" data-category="nature">
+            <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=2000&q=85" alt="Alp Ko'li va Qoyalari" />
+            <div class="slide-overlay">
+              <span class="slide-tag">🏔️ 4K ULTRA NATURE</span>
+              <h2 class="slide-title">Yosemite Oltin Quyosh Botishi</h2>
+              <p class="slide-desc">Kristalldek tiniq suv aksida buyuk tog' cho'qqilari va quyoshning so'nggi nurlari.</p>
+              <div class="slide-actions">
+                <a href="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=3840&q=100" target="_blank" class="slide-link-btn">
+                  <span>Asl 4K formatda ko'rish</span>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Slide 2 -->
+          <div class="slide" data-category="cyber">
+            <img src="https://images.unsplash.com/photo-1509198397868-475647b2a1e5?auto=format&fit=crop&w=2000&q=85" alt="Kiberpank Tokiyo" />
+            <div class="slide-overlay">
+              <span class="slide-tag">⚡ CYBERPUNK 2077</span>
+              <h2 class="slide-title">Neon Shinjuku Tungi Shahri</h2>
+              <p class="slide-desc">Tungi yomg'ir, pushti-binafsharang neon chiroqlari va kelajak megapolisining sur'ati.</p>
+              <div class="slide-actions">
+                <a href="https://images.unsplash.com/photo-1509198397868-475647b2a1e5?auto=format&fit=crop&w=3840&q=100" target="_blank" class="slide-link-btn">
+                  <span>Asl 4K formatda ko'rish</span>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Slide 3 -->
+          <div class="slide" data-category="space">
+            <img src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=2000&q=85" alt="Kosmos Galaktikasi" />
+            <div class="slide-overlay">
+              <span class="slide-tag">🌌 DEEP COSMOS</span>
+              <h2 class="slide-title">Koinot Tubi va Yulduzlar Tizimi</h2>
+              <p class="slide-desc">Cheksiz fazodagi yorug'lik tumanliklari va yulduzlarning tug'ilish jarayoni.</p>
+              <div class="slide-actions">
+                <a href="https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=3840&q=100" target="_blank" class="slide-link-btn">
+                  <span>Asl 4K formatda ko'rish</span>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Slide 4 -->
+          <div class="slide" data-category="cars">
+            <img src="https://images.unsplash.com/photo-1617814076367-b759c7d7e738?auto=format&fit=crop&w=2000&q=85" alt="Supercar Qorong'u Esteika" />
+            <div class="slide-overlay">
+              <span class="slide-tag">🏎️ HYPER AUTOMOTIVE</span>
+              <h2 class="slide-title">Dark Shadow Hypercar</h2>
+              <p class="slide-desc">Aerodinamik mukammallik, uglerod tolali korpus va drakonik quvvat simfoniyasi.</p>
+              <div class="slide-actions">
+                <a href="https://images.unsplash.com/photo-1617814076367-b759c7d7e738?auto=format&fit=crop&w=3840&q=100" target="_blank" class="slide-link-btn">
+                  <span>Asl 4K formatda ko'rish</span>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Slide 5 -->
+          <div class="slide" data-category="nature">
+            <img src="https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=2000&q=85" alt="Arxitektura va Estetika" />
+            <div class="slide-overlay">
+              <span class="slide-tag">🏛️ NEO ARCHITECTURE</span>
+              <h2 class="slide-title">Zamonaviy Minimalizm San'ati</h2>
+              <p class="slide-desc">Shisha, beton va tabiiy yorug'likning uyg'unlashgan muazzam fazoviy dizayni.</p>
+              <div class="slide-actions">
+                <a href="https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=3840&q=100" target="_blank" class="slide-link-btn">
+                  <span>Asl 4K formatda ko'rish</span>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Cinema Navigation Chevrons -->
+        <button class="nav-arrow prev-arrow prev-btn" id="prev-btn" aria-label="Oldingi slayd">
+          <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="15 18 9 12 15 6"/>
+          </svg>
+        </button>
+        <button class="nav-arrow next-arrow next-btn" id="next-btn" aria-label="Keyingi slayd">
+          <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="9 18 15 12 9 6"/>
+          </svg>
+        </button>
+
+        <!-- Laser Autoplay Progress Bar -->
+        <div class="slider-progress-track">
+          <div class="slider-progress-bar" id="progress-bar"></div>
+        </div>
+      </div>
+
+      <!-- Interactive Filmstrip / Thumbnails Bar -->
+      <div class="thumbnails-bar" id="thumbnails-bar">
+        <!-- Thumbnails dynamically injected by JS -->
+      </div>
+
+      <!-- Bottom Status & Controls Bar -->
+      <div class="slider-footer">
+        <!-- Autoplay Toggle Button -->
+        <button class="control-btn" id="autoplay-btn" title="Avtomatik o'tishni yoqish / pauza">
+          <svg id="play-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+            <polygon points="5 3 19 12 5 21 5 3"/>
+          </svg>
+          <svg id="pause-icon" class="hidden" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+            <rect x="6" y="4" width="4" height="16"/>
+            <rect x="14" y="4" width="4" height="16"/>
+          </svg>
+        </button>
+
+        <!-- Interactive Morphing Dots -->
+        <div class="dots-container" id="dots-container"></div>
+
+        <!-- 3D Effect Mode Selector -->
+        <div class="effect-selector">
+          <span class="effect-label">Effekt:</span>
+          <select id="animation-mode-select" class="effect-select">
+            <option value="cube3d">Cube 3D Perspective</option>
+            <option value="cinematic">Cinematic Zoom & Blur</option>
+            <option value="parallax">Parallax Flip</option>
+          </select>
+        </div>
+      </div>
+    </main>
+
+    <!-- Glassmorphic Toast Alerts -->
+    <div class="toast" id="toast"></div>
+
+    <script src="./script.js"></script>
+  </body>
+</html>
